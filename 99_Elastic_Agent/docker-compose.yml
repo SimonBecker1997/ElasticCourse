@@ -1,0 +1,14 @@
+version: "3"
+services:
+  elastic-agent:
+    image: docker.elastic.co/beats/elastic-agent:8.1.0
+    container_name: elastic-agent
+    restart: on-failure
+    user: root # note, synthetic browser monitors require this set to `elastic-agent`
+    environment:
+      - FLEET_ENROLLMENT_TOKEN=WWdELW5IOEJlNXRUcjBzSlNIVTk6dE50Sno2Z29TcUdjOW1UUWFtdXBOZw==
+      - FLEET_ENROLL=1
+      - FLEET_URL=https://192.168.56.1:9200 # The IP of my host, will change from host to host
+      - INSECURE=true # Due to Self signed certificates
+    ports: 
+      - 8220:8220
