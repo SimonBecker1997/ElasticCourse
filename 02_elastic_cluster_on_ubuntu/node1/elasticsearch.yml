@@ -106,7 +106,7 @@ xpack.security.transport.ssl:
   truststore.path: certs/transport.p12
 # Create a new cluster with the current node only
 # Additional nodes can still join the cluster later
-cluster.initial_master_nodes: ["simon-VirtualBox"]
+cluster.initial_master_nodes: ["node-1","node-2"]
 
 # Allow HTTP API connections from localhost and local networks
 # Connections are encrypted and require user authentication
