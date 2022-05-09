@@ -111,7 +111,7 @@ xpack.security.transport.ssl:
   keystore.path: certs/transport.p12
   truststore.path: certs/transport.p12
 # Discover existing nodes in the cluster
-discovery.seed_hosts: ["10.0.2.15:9300"]
+discovery.seed_hosts: ["10.0.2.15"]
 
 # Allow HTTP API connections from anywhere
 # Connections are encrypted and require user authentication
