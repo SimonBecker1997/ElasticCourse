@@ -67,7 +67,7 @@ path.logs: /var/log/elasticsearch
 # Pass an initial list of hosts to perform discovery when this node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
-discovery.seed_hosts: ["10.0.2.4","10.0.2.5"]
+discovery.seed_hosts: ["node2_ip","node3_ip"] # Change it! 
 #
 # Bootstrap the cluster using an initial set of master-eligible nodes:
 #
