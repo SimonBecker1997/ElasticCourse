@@ -1,0 +1,16 @@
+# Module: elasticsearch
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/8.2/metricbeat-module-elasticsearch.html
+
+- module: elasticsearch
+  metricsets:
+    - node
+    - node_stats
+    - index
+    - shard
+  period: 30s
+  hosts: ["https://localhost:9200"]
+  username: "elastic"
+  password: "onw06_8uvZjvZWpotiGk"
+  ssl.verification_mode: "none"
+  xpack.enabled: false
+  scope: node
