@@ -1,74 +1,51 @@
-###################### Filebeat Configuration Example #########################
+################### Heartbeat Configuration Example #########################
 
-# This file is an example configuration file highlighting only the most common
-# options. The filebeat.reference.yml file from the same directory contains all the
-# supported options with more comments. You can use it as a reference.
+# This file is an example configuration file highlighting only some common options.
+# The heartbeat.reference.yml file in the same directory contains all the supported options
+# with detailed comments. You can use it for reference.
 #
 # You can find the full configuration reference here:
-# https://www.elastic.co/guide/en/beats/filebeat/index.html
+# https://www.elastic.co/guide/en/beats/heartbeat/index.html
 
-# For more available modules and options, please see the filebeat.reference.yml sample
-# configuration file.
+############################# Heartbeat ######################################
 
-# ============================== Filebeat inputs ===============================
+# Define a directory to load monitor definitions from. Definitions take the form
+# of individual yaml files.
+heartbeat.config.monitors:
+  # Directory + glob pattern to search for configuration files
+  path: ${path.config}/monitors.d/*.yml
+  # If enabled, heartbeat will periodically check the config.monitors path for changes
+  reload.enabled: true
+  # How often to check for changes
+  reload.period: 5s
 
-filebeat.inputs:
+# Configure monitors inline
+heartbeat.monitors:
+- type: http
+  # Set enabled to true (or delete the following line) to enable this example monitor
+  enabled: false
+  # ID used to uniquely identify this monitor in elasticsearch even if the config changes
+  id: my-google-monitor
+  # Human readable display name for this service in Uptime UI and elsewhere
+  name: Google
+  # List or urls to query
+  urls: ["http://google.com"]
+  # Configure task schedule
+  schedule: '@every 10s'
+  # Total test connection and data exchange timeout
+  #timeout: 16s
+  # Name of corresponding APM service, if Elastic APM is in use for the monitored service.
+  #service.name: my-apm-service-name
 
-# Each - is an input. Most options can be set at the input level, so
-# you can use different inputs for various configurations.
-# Below are the input specific configurations.
-
-# filestream is an input for collecting log messages from files.
-- type: filestream
-
-  # Unique ID among all inputs, an ID is required.
-  id: my-filestream-var-log
-
-  # Change to true to enable this input configuration.
-  enabled: true
-
-  # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - /var/log/*.log
-    #- c:\programdata\elasticsearch\logs\*
-
-  # Exclude lines. A list of regular expressions to match. It drops the lines that are
-  # matching any regular expression from the list.
-  #exclude_lines: ['^DBG']
-
-  # Include lines. A list of regular expressions to match. It exports the lines that are
-  # matching any regular expression from the list.
-  #include_lines: ['^ERR', '^WARN']
-
-  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
-  # are matching any regular expression from the list. By default, no files are dropped.
-  #prospector.scanner.exclude_files: ['.gz$']
-
-  # Optional additional fields. These fields can be freely picked
-  # to add additional information to the crawled log files for filtering
-  #fields:
-  #  level: debug
-  #  review: 1
-
-# ============================== Filebeat modules ==============================
-
-filebeat.config.modules:
-  # Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
-
-  # Set to true to enable config reloading
-  reload.enabled: false
-
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
+# Experimental: Set this to true to run heartbeat monitors exactly once at startup
+#heartbeat.run_once: true
 
 # ======================= Elasticsearch template setting =======================
 
 setup.template.settings:
   index.number_of_shards: 1
-  #index.codec: best_compression
+  index.codec: best_compression
   #_source.enabled: false
-
 
 # ================================== General ===================================
 
@@ -85,17 +62,6 @@ setup.template.settings:
 #fields:
 #  env: staging
 
-# ================================= Dashboards =================================
-# These settings control loading the sample dashboards to the Kibana index. Loading
-# the dashboards is disabled by default and can be enabled either by setting the
-# options here or by using the `setup` command.
-#setup.dashboards.enabled: false
-
-# The URL from where to download the dashboards archive. By default this URL
-# has a value which is computed based on the Beat name and version. For released
-# versions, this URL points to the dashboard archive on the artifacts.elastic.co
-# website.
-#setup.dashboards.url:
 
 # =================================== Kibana ===================================
 
@@ -116,7 +82,7 @@ setup.kibana:
 
 # =============================== Elastic Cloud ================================
 
-# These settings simplify using Filebeat with the Elastic Cloud (https://cloud.elastic.co/).
+# These settings simplify using Heartbeat with the Elastic Cloud (https://cloud.elastic.co/).
 
 # The cloud.id setting overwrites the `output.elasticsearch.hosts` and
 # `setup.kibana.host` options.
@@ -145,6 +111,7 @@ output.elasticsearch:
   password: "onw06_8uvZjvZWpotiGk"
   ssl.verification_mode: "none"
   allow_older_versions: true
+
 # ------------------------------ Logstash Output -------------------------------
 #output.logstash:
   # The Logstash hosts
@@ -161,12 +128,16 @@ output.elasticsearch:
   #ssl.key: "/etc/pki/client/cert.key"
 
 # ================================= Processors =================================
+
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
-  - add_cloud_metadata: ~
-  - add_docker_metadata: ~
-  - add_kubernetes_metadata: ~
+  - add_observer_metadata:
+      # Optional, but recommended geo settings for the location Heartbeat is running in
+      #geo:
+        # Token describing this location
+        #name: us-east-1a
+        # Lat, Lon "
+        #location: "37.926868, -78.024902"
+
 
 # ================================== Logging ===================================
 
@@ -180,7 +151,7 @@ processors:
 #logging.selectors: ["*"]
 
 # ============================= X-Pack Monitoring ==============================
-# Filebeat can export internal metrics to a central Elasticsearch monitoring
+# Heartbeat can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
@@ -188,7 +159,7 @@ processors:
 #monitoring.enabled: false
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
-# Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
+# Heartbeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
 
@@ -203,12 +174,12 @@ processors:
 
 # ============================== Instrumentation ===============================
 
-# Instrumentation support for the filebeat.
+# Instrumentation support for the heartbeat.
 #instrumentation:
-    # Set to true to enable instrumentation of filebeat.
+    # Set to true to enable instrumentation of heartbeat.
     #enabled: false
 
-    # Environment in which filebeat is running on (eg: staging, production, etc.)
+    # Environment in which heartbeat is running on (eg: staging, production, etc.)
     #environment: ""
 
     # APM Server hosts to report instrumentation results to.
