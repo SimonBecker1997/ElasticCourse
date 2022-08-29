@@ -11,3 +11,4 @@ services:
       - /:/hostfs:ro
       - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
     command: metricbeat -e -strict.perms=false
+    user: root
