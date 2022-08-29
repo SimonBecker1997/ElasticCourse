@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.1.0
+    container_name: "metricbeat"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+      - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
+    command: metricbeat -e -strict.perms=false
