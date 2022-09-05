@@ -15,3 +15,4 @@ output.elasticsearch:
   hosts: ["https://10.0.2.15:9200"]
   username: "elastic"
   password: "onw06_8uvZjvZWpotiGk"
+  ssl.verification_mode: "none"
