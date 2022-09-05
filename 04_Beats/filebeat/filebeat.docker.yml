@@ -1,0 +1,17 @@
+filebeat.inputs:
+- type: container
+  paths: 
+    - '/var/lib/docker/containers/*/*-json.log'
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+processors:
+- add_cloud_metadata: ~
+
+output.elasticsearch:
+  hosts: ["https://10.0.2.15:9200"]
+  username: "elastic"
+  password: "onw06_8uvZjvZWpotiGk"
