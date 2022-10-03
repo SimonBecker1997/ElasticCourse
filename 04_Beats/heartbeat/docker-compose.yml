@@ -1,0 +1,7 @@
+version: '3.5'
+services:
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:8.1.0
+    container_name: heartbeat
+    volumes: 
+      - ./heartbeat.docker.yml:/usr/share/heartbeat/heartbeat.yml:ro
