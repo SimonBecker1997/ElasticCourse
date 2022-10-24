@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  apm01:
+    image: docker.elastic.co/apm/apm-server:8.4.3
+    ports:
+      - 8200:8200
+    volumes: 
+      - ./apm-server.docker.yml:/usr/share/apm-server/apm-server.yml:ro
