@@ -1,4 +1,3 @@
-# Copyright by Elastic --> Check out their Git Repo: https://github.com/elastic/opbeans-java
 #Multi-Stage build
 
 #Build application stage
@@ -38,7 +37,7 @@ COPY --from=0 /usr/src/java-app/*.jar ./
 
 # Copy Elastic agent from docker image
 # updated by .ci/bump-version.sh
-COPY --from=docker.elastic.co/observability/apm-agent-java:1.34.1 /usr/agent/elastic-apm-agent.jar /app/elastic-apm-agent.jar
+COPY --from=docker.elastic.co/observability/apm-agent-java:1.34.0 /usr/agent/elastic-apm-agent.jar /app/elastic-apm-agent.jar
 
 #Download the opentelemetry agent
 RUN curl -L https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.10.1/opentelemetry-javaagent.jar --output /app/opentelemetry-javaagent.jar
@@ -48,7 +47,7 @@ LABEL \
     org.label-schema.schema-version="1.0" \
     org.label-schema.vendor="Elastic" \
     org.label-schema.name="opbeans-java" \
-    org.label-schema.version="1.34.1" \
+    org.label-schema.version="1.34.0" \
     org.label-schema.url="https://hub.docker.com/r/opbeans/opbeans-java" \
     org.label-schema.vcs-url="https://github.com/elastic/opbeans-java" \
     org.label-schema.license="MIT"
