@@ -1,3 +1,4 @@
+# Copyright by Elastic --> Check out their Git Repo: https://github.com/elastic/opbeans-java
 version: "2.5"
 services:
   opbeans-java:
