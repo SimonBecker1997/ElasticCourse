@@ -1,0 +1,22 @@
+version: "2.5"
+services:
+  opbeans-java:
+    build: .
+    image: opbeans/opbeans-java:latest
+    container_name: opbeans-java
+    ports:
+      - "127.0.0.1:8000:8000"
+    logging:
+      driver: 'json-file'
+      options:
+          max-size: '2m'
+          max-file: '5'
+    environment:
+      - ELASTIC_APM_SERVICE_NAME=opbeans-java
+      - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL:-http://10.0.2.4:8200}
+      - ELASTIC_APM_APPLICATION_PACKAGES=co.elastic.apm.opbeans
+      - ELASTIC_APM_JS_SERVER_URL=${ELASTIC_APM_JS_SERVER_URL:-http://10.0.2.4:8200}
+      - OPBEANS_SERVER_PORT=8000
+      - ELASTIC_APM_ENABLE_LOG_CORRELATION=true
+      - ELASTIC_APM_ENVIRONMENT=production
+      - APM_AGENT_TYPE=elasticapm

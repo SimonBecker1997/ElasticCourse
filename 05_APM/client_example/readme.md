@@ -6,6 +6,6 @@ java -javaagent:./elastic-apm-agent-1.33.0.jar \
 -Delastic.apm.secret_token= \
 -Delastic.apm.environment=production \
 -Delastic.apm.application_packages=org.example \
--jar husStgr_v1.0.jar
+-jar myapp.jar
 
 ```
