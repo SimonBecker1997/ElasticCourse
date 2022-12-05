@@ -3,9 +3,14 @@
 ```
 git clone https://github.com/elastic/opbeans-java
 ```
-2. Then build the app by running 
+2. Change the placeholders in the docker-compose.yml from `your-url-here` to your actual APM Server Endpoint:
+```
+      - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL:-http://your-url-here:8200}
+      - ELASTIC_APM_JS_SERVER_URL=${ELASTIC_APM_JS_SERVER_URL:-http://your-url-here:8200}
+```
+3. Then build the app by running 
 ```docker build -t opbeans/opbeans-java:latest .```
-3. Start the docker compose file by running 
+4. Start the docker compose file by running 
 ```
 docker-compose up
 ```
