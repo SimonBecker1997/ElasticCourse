@@ -15,8 +15,12 @@ You will learn how to create a cluster manually on linux, in this example in ubu
 After setting up our first cluster, we can now start configuring it. This example provides you all config files for Docker.
 ### [04_Elastic Beats](https://github.com/SimonBecker1997/ElasticCourse/tree/main/04_Beats)
 All about getting data into your cluster. You will learn how to collect data with beats, such as logs or metrics.
-### [05_APM](https://github.com/SimonBecker1997/ElasticCourse/tree/main/05_APM/client_example)
-Not released yet, will come in a few months
+### [05_APM](https://github.com/SimonBecker1997/ElasticCourse/tree/main/05_APM)
+APM Monitoring for your applications. Example monitoring a Java application
+### [06_Upgrade](https://github.com/SimonBecker1997/ElasticCourse/tree/main/06_Upgrade)
+Instructions on how to upgrade your Elastic Cluster to a new version.
+### [07_Bonus: Grafana](https://github.com/SimonBecker1997/ElasticCourse/tree/main/07_Grafana)
+Connect a Grafana Instance to your Elastic
 
 ## How to run the lab on my computer?
 There are multiple ways to run this lab.
